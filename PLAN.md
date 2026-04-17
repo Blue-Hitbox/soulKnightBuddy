@@ -163,7 +163,7 @@ function getSafeDirection(state: GameState) {
 
 ## 🖥️ 5. Output Layer
 
-### Option A — Overlay (Recommended) 🌟
+### Option A — Overlay on pc (Recommended) 🌟
 
 **Show:**
 
