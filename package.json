@@ -1,5 +1,5 @@
 {
-  "name": "soulKnightHeadless",
+  "name": "soulKnightBuddy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -26,6 +26,7 @@
     "typescript-eslint": "^8.0.0"
   },
   "dependencies": {
+    "opencv4nodejs-prebuilt": "^6.2.3",
     "ts-node": "^10.9.2"
   }
 }

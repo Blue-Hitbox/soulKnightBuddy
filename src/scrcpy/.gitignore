@@ -1,0 +1,6 @@
+# scrcpy binaries (downloaded automatically)
+scrcpy.exe
+scrcpy-server
+adb.exe
+*.dll
+*.so
