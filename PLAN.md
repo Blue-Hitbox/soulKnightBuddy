@@ -1,20 +1,26 @@
-```md
-# 🤖 AI Buddy System Design Plan (Soul Knight Assist)
+# 🤖 AI Buddy System Design Plan
 
-Target game: *:contentReference[oaicite:0]{index=0}*
+## Soul Knight Assist
 
-This plan describes a **real-time “AI co-pilot” system** that:
-- reads the game screen
-- understands enemies + bullets
-- computes safe movement / targeting
-- optionally sends light control inputs
+> **Target Game:** Soul Knight  
+> **Purpose:** Real-time AI co-pilot for gameplay assistance
 
 ---
 
-# 🧠 1. System Overview
+### 📋 Overview
+
+This plan describes a **real-time "AI co-pilot" system** that:
+
+- 📸 **Reads** the game screen
+- 🎯 **Understands** enemies & bullets
+- 🧮 **Computes** safe movement & targeting
+- 🎮 **Optionally sends** light control inputs
+
+---
+
+## 🧠 1. System Overview
 
 ```
-
 Android Phone (Game)
 │
 │  scrcpy / ADB stream
@@ -29,53 +35,52 @@ AI Buddy Brain (decision system)
 │
 ├── Overlay (visual hints)
 └── Optional ADB input (assist mode)
-
-````
+```
 
 ---
 
-# 📡 2. Capture Layer (Real-Time Input)
+## 📡 2. Capture Layer (Real-Time Input)
 
-## Goal
+### 🎯 Goal
 Get low-latency game frames from phone.
 
-## Recommended Tool
-- :contentReference[oaicite:1]{index=1}
+### 🛠️ Recommended Tool
+- **scrcpy** - Screen copy
 
-## Setup
+### ⚙️ Setup
 ```bash
 scrcpy --max-size 800 --bit-rate 8M --max-fps 60
-````
+```
 
-## Why scrcpy?
+### ❓ Why scrcpy?
 
-* 30–60 FPS possible
-* very low latency
-* easier than raw ADB screenshots
+| Advantage | Description |
+|-----------|-------------|
+| 🚀 Performance | 30–60 FPS possible |
+| ⚡ Latency | Very low latency |
+| 🔧 Simplicity | Easier than raw ADB screenshots |
 
-## Output
-
-* live video stream of gameplay
-
----
-
-# 👁️ 3. Vision Layer (Game Understanding)
-
-## Goal
-
-Convert pixels → structured game state
+### 📤 Output
+- 📹 Live video stream of gameplay
 
 ---
 
-## Phase 1 (Recommended): Rule-based vision
+## 👁️ 3. Vision Layer (Game Understanding)
 
-### Techniques
+### 🎯 Goal
+Convert **pixels** → **structured game state**
 
-* color detection (bullets)
-* contour detection (enemies)
-* position estimation
+---
 
-### Output model
+### 🏗️ Phase 1 (Recommended): Rule-based Vision
+
+#### 🔧 Techniques
+
+- 🎨 Color detection (bullets)
+- 🔍 Contour detection (enemies)
+- 📍 Position estimation
+
+#### 📊 Output Model
 
 ```ts
 type GameState = {
@@ -87,39 +92,38 @@ type GameState = {
 
 ---
 
-## Phase 2 (Upgrade): ML detection
+### 🤖 Phase 2 (Upgrade): ML Detection
 
 Later replace vision with:
 
-* YOLO object detection
-* TensorFlow / PyTorch model
+- 🎯 YOLO object detection
+- 🧠 TensorFlow / PyTorch model
 
 ---
 
-# 🧠 4. AI Buddy Brain (Core Logic)
+## 🧠 4. AI Buddy Brain (Core Logic)
 
-## Goal
-
+### 🎯 Goal
 Decide:
 
-* where to move
-* what to shoot
-* when to avoid danger
+- 🚶 Where to move
+- 🔫 What to shoot
+- ⚠️ When to avoid danger
 
 ---
 
-## A. Danger Map System
+### A. 🗺️ Danger Map System
 
-Each bullet creates a “danger zone”.
+Each bullet creates a **"danger zone"**.
 
-Concept:
+**Concept:**
 
-* closer bullet = higher risk
-* overlapping zones = extreme danger
+- 🔴 Closer bullet = higher risk
+- 🔴🔴 Overlapping zones = extreme danger
 
 ---
 
-## B. Movement Logic
+### B. 🚶 Movement Logic
 
 ```ts
 function getSafeDirection(state: GameState) {
@@ -129,69 +133,71 @@ function getSafeDirection(state: GameState) {
 }
 ```
 
-Behavior:
+**Behavior:**
 
-* avoid projectiles
-* escape crowded areas
-* maintain distance from threats
-
----
-
-## C. Targeting Logic
-
-Rules:
-
-* prioritize nearest enemy
-* or most dangerous enemy
-* or weakest enemy (optional mode)
+- ⚠️ Avoid projectiles
+- 🏃 Escape crowded areas
+- 📏 Maintain distance from threats
 
 ---
 
-## D. Buddy Modes
+### C. 🎯 Targeting Logic
 
-| Mode       | Behavior       |
-| ---------- | -------------- |
-| Defensive  | survival-first |
-| Balanced   | default        |
-| Aggressive | attack-focused |
+**Rules:**
 
----
-
-# 🖥️ 5. Output Layer
-
-## Option A — Overlay (Recommended)
-
-Show:
-
-* enemy boxes
-* bullet highlights
-* safe movement arrow
-
-✔ Safe (no gameplay interference)
-✔ Best for learning + debugging
+- 🎯 Prioritize nearest enemy
+- ⚠️ Or most dangerous enemy
+- 💀 Or weakest enemy (optional mode)
 
 ---
 
-## Option B — Light Control (ADB assist)
+### D. 🎮 Buddy Modes
 
-Use only minimal automation:
+| Mode | Behavior | Emoji |
+|------|----------|-------|
+| 🛡️ Defensive | Survival-first | ❤️ Priority |
+| ⚖️ Balanced | Default | 🎯 Standard |
+| ⚔️ Aggressive | Attack-focused | 💥 Offensive |
+
+---
+
+## 🖥️ 5. Output Layer
+
+### Option A — Overlay (Recommended) 🌟
+
+**Show:**
+
+- 🟥 Enemy boxes
+- 🔴 Bullet highlights
+- ➡️ Safe movement arrow
+
+| Pros | Status |
+|------|--------|
+| Safe (no gameplay interference) | ✅ |
+| Best for learning + debugging | ✅ |
+
+---
+
+### Option B — Light Control (ADB Assist) 🎮
+
+**Use only minimal automation:**
 
 ```bash
 adb shell input swipe x1 y1 x2 y2
 adb shell input tap x y
 ```
 
-Rules:
+**Rules:**
 
-* only trigger in high danger
-* never full automation
-* keep player in control
+- ⚠️ Only trigger in high danger
+- ❌ Never full automation
+- 🎮 Keep player in control
 
 ---
 
-# ⚙️ 6. Performance Design
+## ⚙️ 6. Performance Design
 
-## Frame Pipeline
+### 🔄 Frame Pipeline
 
 ```
 Capture → Resize → Process → Decision → Output
@@ -199,92 +205,79 @@ Capture → Resize → Process → Decision → Output
 
 ---
 
-## Recommended Settings
+### 📐 Recommended Settings
 
-* resolution: 320×180 or 640×360
-* processing FPS: 20–30
-* skip frames if overloaded
-
----
-
-## Optimization Rules
-
-✔ crop gameplay area only
-✔ avoid full-resolution processing
-✔ use simple math before ML
-✔ process every 2nd frame if needed
+| Setting | Value |
+|---------|-------|
+| 📺 Resolution | 320×180 or 640×360 |
+| 🎬 Processing FPS | 20–30 |
+| ⏭️ Frame Skip | If overloaded |
 
 ---
 
-# 🧪 7. Build Phases
+### ⚡ Optimization Rules
+
+| Rule | Status |
+|------|--------|
+| 🖼️ Crop gameplay area only | ✅ |
+| 📉 Avoid full-resolution processing | ✅ |
+| ➕ Use simple math before ML | ✅ |
+| ⏭️ Process every 2nd frame if needed | ✅ |
 
 ---
 
-## Phase 1 — Capture System
+## 🧪 7. Build Phases
 
-* scrcpy working
-* live frame display in OpenCV
+### 📍 Phase 1 — Capture System
+- ✅ scrcpy working
+- ✅ Live frame display in OpenCV
 
----
+### 🔍 Phase 2 — Vision
+- 👤 Detect player
+- 🔴 Detect bullets
+- 👾 Detect enemies
 
-## Phase 2 — Vision
+### 🏗️ Phase 3 — Game State Builder
+- 🔄 Convert vision → structured data
 
-* detect player
-* detect bullets
-* detect enemies
+### 🧠 Phase 4 — AI Buddy Brain
+- 🚶 Safe movement system
+- 🎯 Targeting logic
 
----
+### 🖥️ Phase 5 — Overlay System
+- ⚠️ Draw warnings + suggestions
 
-## Phase 3 — Game State Builder
+### 🎮 Phase 6 — Optional Control
+- 🕹️ ADB movement assist
+- 🚨 Emergency dodge logic
 
-* convert vision → structured data
-
----
-
-## Phase 4 — AI Buddy Brain
-
-* safe movement system
-* targeting logic
-
----
-
-## Phase 5 — Overlay System
-
-* draw warnings + suggestions
+### 🤖 Phase 7 — ML Upgrade (Optional)
+- 🧠 Replace vision system with ML model
+- 📈 Improve detection accuracy
 
 ---
 
-## Phase 6 — Optional Control
+## 🚨 Important Design Principles
 
-* ADB movement assist
-* emergency dodge logic
+### ❌ This System Should NOT Be:
 
----
+| Anti-Pattern | Status |
+|--------------|--------|
+| 🤖 Full automation bot | ❌ |
+| 🎯 Perfect AI player | ❌ |
+| 💥 Game-breaking exploit | ❌ |
 
-## Phase 7 — ML Upgrade (Optional)
+### ✅ It SHOULD Be:
 
-* replace vision system with ML model
-* improve detection accuracy
-
----
-
-# 🚨 Important Design Principle
-
-This system should NOT be:
-
-* full automation bot ❌
-* perfect AI player ❌
-* game-breaking exploit ❌
-
-It SHOULD be:
-
-* assistive co-pilot ✔
-* visual + decision helper ✔
-* lightweight control system ✔
+| Feature | Status |
+|---------|--------|
+| 🤝 Assistive co-pilot | ✅ |
+| 📊 Visual + decision helper | ✅ |
+| 🪶 Lightweight control system | ✅ |
 
 ---
 
-# 🧩 Final Architecture
+## 🧩 Final Architecture
 
 ```
 scrcpy (video stream)
@@ -296,20 +289,4 @@ Game state extraction
 AI buddy decision engine
         ↓
 Overlay + optional ADB assist
-```
-
----
-
-# 🚀 If you want next step
-
-I can help you build:
-
-* 🧱 Phase 1 (working scrcpy + frame loop)
-* 🎯 Bullet detection system
-* 🧠 AI buddy decision engine (code)
-* 📊 full working prototype structure (TypeScript + Python)
-
-Just tell me 👍
-
-```
 ```
