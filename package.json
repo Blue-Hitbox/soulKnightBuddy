@@ -1,0 +1,31 @@
+{
+  "name": "soulKnightHeadless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/app/main.ts",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,md}\""
+  },
+  "keywords": [],
+  "author": "Blue Hitbox",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^10.2.1",
+    "jiti": "^2.6.1",
+    "typescript": "^6.0.3",
+    "prettier": "^3.8.3",
+    "typescript-eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
